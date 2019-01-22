@@ -1,0 +1,45 @@
+<link href="https://maxcdn.bootstrapcdn.com/font-awesome/4.3.0/css/font-awesome.min.css" rel="stylesheet">
+<nav class="navbar navbar-light bg-light">
+  <form [formGroup]="searchForm" class="form-inline">
+    <div class="search">
+      <label for="search">Search People</label>
+      <input formControlName="search" id="search" />
+    </div>
+    <div class="form-check pull-right">
+      <input class="form-check-input" type="checkbox" [(ngModel)]="simulateSlow" [ngModelOptions]="{standalone: true}" />
+      <label class="form-check-label" for="defaultCheck2">
+        Simulate Slow Search
+      </label>
+    </div>
+  </form>
+</nav>
+
+
+<pre>{{simulateSlow}}</pre>
+<div class="container profile-page">
+  <div class="row">
+    <div class="col-xl-6 col-lg-7 col-md-12" *ngFor="let person of results | async">
+      <div class="card profile-header">
+        <div class="body">
+          <div class="row">
+            <div class="col-lg-4 col-md-4 col-12">
+              <div class="profile-image float-md-right"> <img [src]="person.photoUrl" alt=""> </div>
+            </div>
+            <div class="col-lg-8 col-md-8 col-12">
+              <h4 class="m-t-0 m-b-0"><strong>{{person.firstName}} {{person.lastName}}</strong></h4>
+              <p>
+                {{person.address.streetAddress}}<br />
+                {{person.address.city}}, {{person.address.state}} {{person.address.postalCode}}
+              </p>
+              Interests: 
+              <div class="interest" *ngFor="let i of person.interest; let index = index; let last = last">
+                <span *ngIf="index < 5">{{i}}</span><span *ngIf="!last && index < 5">, </span>
+              </div>
+            </div>
+
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
